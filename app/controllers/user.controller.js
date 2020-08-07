@@ -1,6 +1,6 @@
 const User = require("../models/user.model.js");
 
-// Create and Save a new Customer
+// Create and Save a new User
 exports.create = (req, res) => {
     // Validate request
     if (!req.body) {
@@ -26,7 +26,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Customers from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
     User.getAll((err, data) => {
         if (err)
@@ -37,24 +37,24 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single Customer with a customerId
+// Find a single User with a userId
 exports.findOne = (req, res) => {
-    Customer.findById(req.params.customerId, (err, data) => {
+    User.findById(req.params.userId, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found Customer with id ${req.params.customerId}.`
+                    message: `Not found User with id ${req.params.userId}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Error retrieving Customer with id " + req.params.customerId
+                    message: "Error retrieving User with id " + req.params.userId
                 });
             }
         } else res.send(data);
     });
 };
 
-// Update a Customer identified by the customerId in the request
+// Update a User identified by the userId in the request
 exports.update = (req, res) => {
     // Validate Request
     if (!req.body) {
@@ -65,9 +65,9 @@ exports.update = (req, res) => {
 
     console.log(req.body);
 
-    Customer.updateById(
-        req.params.customerId,
-        new Customer(req.body),
+    User.updateById(
+        req.params.userId,
+        new User(req.body),
         (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {
@@ -84,30 +84,30 @@ exports.update = (req, res) => {
     );
 };
 
-// Delete a Customer with the specified customerId in the request
+// Delete a User with the specified userId in the request
 exports.delete = (req, res) => {
-    Customer.remove(req.params.customerId, (err, data) => {
+    User.remove(req.params.userId, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found Customer with id ${req.params.customerId}.`
+                    message: `Not found User with id ${req.params.userId}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Could not delete Customer with id " + req.params.customerId
+                    message: "Could not delete User with id " + req.params.userId
                 });
             }
-        } else res.send({ message: `Customer was deleted successfully!` });
+        } else res.send({ message: `User was deleted successfully!` });
     });
 };
 
 // Delete all Customers from the database.
 exports.deleteAll = (req, res) => {
-    Customer.removeAll((err, data) => {
+    User.removeAll((err, data) => {
         if (err)
             res.status(500).send({
-                message: err.message || "Some error occurred while removing all customers."
+                message: err.message || "Some error occurred while removing all users."
             });
-        else res.send({ message: `All Customers were deleted successfully!` });
+        else res.send({ message: `All users were deleted successfully!` });
     });
 };
